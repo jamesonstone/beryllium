@@ -17,7 +17,7 @@ var casper = require('casper').create({
 });
 
 
-casper.test.begin("Test a valid login at /u/login/", 0, function(test) {
+casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1@voxy.com',
@@ -49,7 +49,7 @@ casper.test.begin("Test a valid login at /u/login/", 0, function(test) {
 
 });
 
-casper.test.begin("Test a invalid login at /u/login/", 0, function(test) {
+casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1',
