@@ -17,7 +17,7 @@ var casper = require('casper').create({
 });
 
 
-casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
+casper.test.begin("Test a valid login at /u/login/", 0, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'voxytest@gmail.com',
@@ -41,7 +41,7 @@ casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
 		//dump the current session and logout
 		//TODO: add this to teardown
 		this.echo('current url: ' + this.getCurrentUrl());
-	})
+	});
 
 	casper.run(function() {
 		test.done();
@@ -49,7 +49,7 @@ casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
 
 });
 
-casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
+casper.test.begin("Test a invalid login at /u/login/", 0, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'voxytest',
@@ -69,8 +69,17 @@ casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 		}
 	});
 
+	casper.thenOpen(logout, function() {
+		//dump the current session and logout
+		//TODO: add this to teardown		
+		this.echo('current url: ' + this.getCurrentUrl());
+	});
+
 	casper.run(function() {
 		test.done();
+		//exit the tests
+		this.exit();
 	});
 
 });
+
