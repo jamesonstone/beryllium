@@ -60,6 +60,8 @@ casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 	casper.then(function() {
 		var check_url = this.getCurrentUrl();
 		this.echo('current url: ' + check_url);
+		// test.assertTextExists('Please enter a correct username and password. Note that both fields are case-sensitive.', 
+		// 	'error text is displayed');		
 
 		//check for the substring "guide/recommend/" in the url
 		if(check_url.indexOf("guide/recommend/") === -1) {
