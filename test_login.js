@@ -12,8 +12,8 @@ var logout = 'http://voxy.com/u/logout/';
 
 var x = require('casper').selectXPath;
 var casper = require('casper').create({
-	//verbose: true, 
-	//logLevel: 'debug'
+	// verbose: true, 
+	// logLevel: 'debug'
 });
 
 
@@ -60,8 +60,7 @@ casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 	casper.then(function() {
 		var check_url = this.getCurrentUrl();
 		this.echo('current url: ' + check_url);
-		// test.assertTextExists('Please enter a correct username and password. Note that both fields are case-sensitive.', 
-		// 	'error text is displayed');		
+		test.assertExists(x('//*[@id="body"]/div[2]/div/div/div/div/ul/li/font/font[1]'), 'error text is displayed');	
 
 		//check for the substring "guide/recommend/" in the url
 		if(check_url.indexOf("guide/recommend/") === -1) {
