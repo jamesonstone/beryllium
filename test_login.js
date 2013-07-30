@@ -12,8 +12,8 @@ var logout = 'http://voxy.com/u/logout/';
 
 var x = require('casper').selectXPath;
 var casper = require('casper').create({
-	// verbose: true, 
-	// logLevel: 'debug'
+	 //verbose: true, 
+	 //logLevel: 'debug'
 });
 
 
@@ -26,15 +26,20 @@ casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
 	});
 
 	casper.then(function() {
-		var check_url = this.getCurrentUrl();
-		this.echo('current url: ' + check_url);
+		//added wait here because transition to guide wasn't occuring fast enough
+		this.wait(2000, function() {
+			var check_url = this.getCurrentUrl();
+			this.echo('current url: ' + check_url);
 
-		//check for the substring "guide/recommend/" in the url
-		if(check_url.indexOf("guide/recommend/") === -1) {
-			casper.test.fail('url does not contain guide/recommend/');
-		} else {
-			casper.test.pass('Guide is displayed');
-		}
+			//check for the substring "guide/recommend/" in the url
+			if(check_url.indexOf("guide/recommend/") === -1) {
+				casper.test.fail('url does not contain guide/recommend/');
+			} else {
+				casper.test.pass('Guide is displayed');
+			}
+
+		});
+
 	});
 
 	casper.thenOpen(logout, function() {
@@ -49,7 +54,7 @@ casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
 
 });
 
-casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
+casper.test.begin("Test a invalid login at /u/login/", 2, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1',
@@ -60,7 +65,6 @@ casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 	casper.then(function() {
 		var check_url = this.getCurrentUrl();
 		this.echo('current url: ' + check_url);
-		test.assertExists(x('//*[@id="body"]/div[2]/div/div/div/div/ul/li/font/font[1]'), 'error text is displayed');	
 
 		//check for the substring "guide/recommend/" in the url
 		if(check_url.indexOf("guide/recommend/") === -1) {
@@ -68,6 +72,11 @@ casper.test.begin("Test a invalid login at /u/login/", 1, function(test) {
 		} else {
 			casper.test.fail('Guide is displayed');
 		}
+	});
+
+	casper.then(function() {
+		//verify error text is displayed (language agnostic)
+		test.assertExists("ul.errorlist", 'Error text displays!	');
 	});
 
 	casper.thenOpen(logout, function() {
