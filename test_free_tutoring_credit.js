@@ -103,7 +103,7 @@ casper.test.begin("Check Subscribe messaging displays for user outside trial", 2
 });
 
 
-casper.test.begin("Check Premium user gains extra credit when subscribing in trial", 2, function(test) {
+casper.test.begin("Check Premium (3mo) user gains extra credit when subscribing in trial", 2, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'tutortest3@voxy.com',
@@ -122,7 +122,42 @@ casper.test.begin("Check Premium user gains extra credit when subscribing in tri
 		this.test.assertExists('#main-content > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > a', 
 			'Free Tutoring Credit messaging displays');
 		this.test.assertSelectorHasText('#main-content > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > a',
-			'Subscribe Now');
+			'You have 6 credits. Get more');
+	});
+
+	casper.thenOpen(logout, function() {
+		//dump the current session and logout
+		this.echo('current url: ' + this.getCurrentUrl());
+		this.wait(500);
+	});
+
+	casper.run(function() {
+		test.done();
+		//this.exit();
+	});	
+});
+
+
+casper.test.begin("Check Premium (12mo) user gains extra credit when subscribing in trial", 2, function(test) {
+	casper.start(login_page, function() {
+		this.fill('form#ajax-login-form', {
+		'username':    'tutortest5@voxy.com',
+		'password':    'things'
+		}, true);
+	});
+
+	casper.wait(1000, function() {
+		//wait for guide to load
+		this.echo('current url: ' + this.getCurrentUrl());
+		this.click('i.icon-tutor');
+	});
+
+	casper.then(function() {
+		this.echo('current url: ' + this.getCurrentUrl());
+		this.test.assertExists('#main-content > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > a', 
+			'Free Tutoring Credit messaging displays');
+		this.test.assertSelectorHasText('#main-content > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > a',
+			'You have 21 credits. Get more');
 	});
 
 	casper.thenOpen(logout, function() {
