@@ -3,6 +3,7 @@
 var login_page = 'http://www.voxy.com/u/login/';
 var logout = 'http://www.voxy.com/u/logout/';
 var landing1 = 'http://voxy.com/landing/web/en/0/9';
+var landing2 = 'http://voxy.com/landing/web/en/2/0';
 
 var fs = require('fs');
 var casper = require('casper').create({
@@ -29,7 +30,7 @@ function get_title(arg1) {
 
 casper.test.begin("Take a screen-shot", 1, function(test) {
 
-	casper.start(landing1, function() {
+	casper.start(landing2, function() {
 		this.wait(1000);
 		this.echo('current url: ' + this.getCurrentUrl());
 	});
@@ -41,7 +42,7 @@ casper.test.begin("Take a screen-shot", 1, function(test) {
 	casper.then(function() {
 		/*var ref_image = fs.read('./compare_page.png');*/
 
-		var t = get_title(landing1);
+		var t = get_title(landing2);
 
 		this.echo(t);		
 		this.capture('landing/' + t + '.png');
