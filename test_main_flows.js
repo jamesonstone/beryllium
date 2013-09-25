@@ -89,7 +89,7 @@ casper.test.begin("Check the Activity Workspace displays", 6, function(test) {
 			test.assertExists('#footer > div > div > div:nth-of-type(2) > ol > li:nth-of-type(3) > li > a',
 				'Translate (in footer) displays');
 			test.assertExists('#content > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div > button', 
-				'OK, Im ready! button displays');
+				'OK, I\'m ready! button displays');
 			test.assertExists('#content > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div',
 				'Start Your Lesson text displays');
 		});
