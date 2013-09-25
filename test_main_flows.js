@@ -21,7 +21,8 @@
 var login_page = 'http://master.pub.voxy.com/u/login/';
 var homepage = 'http://master.pub.voxy.com/';
 var logout = 'http://master.pub.voxy.com/u/logout/';
-var compare = 'http://master.pub.voxy.com/guide/compare/	';
+var compare = 'http://master.pub.voxy.com/guide/compare/';
+var tutor_compare = 'http://master.pub.voxy.com/guide/tutor/credits/';
 
 
 // casper instance
@@ -73,7 +74,6 @@ casper.test.begin("Check the Activity Workspace displays", 6, function(test) {
 	casper.then(function() {
 		//wait for guide to load
 		this.wait(1000, function() {
-			this.echo('current url: ' + this.getCurrentUrl());
 			this.click('#lesson-preview > div:nth-of-type(2) > div > a');
 		});
 	});
@@ -122,9 +122,40 @@ casper.test.begin("Check that /guide/compare/ displays", 8, function(test) {
 			test.assertExists('#main-content > div > div:nth-of-type(3) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > a', 
 				'3 month subscribe button displays');
 			test.assertExists('#main-content > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > a', 
-				'12 month subscribe button displays');
+				'12 month subscribe button displays');			
+		});
+	});
 
-			
+	casper.run(function() {
+		test.done();
+	});
+});
+
+
+casper.test.begin("Check that /guide/tutor/credits/ displays", 7, function(test) {
+	casper.thenOpen(tutor_compare, function() {
+		//wait for guide to load
+		this.wait(1000, function() {
+			this.echo('current url: ' + this.getCurrentUrl());
+		});
+	});
+
+	casper.then(function() {
+		this.wait(1000, function() {
+			test.assertExists('#main-content > div > div:nth-of-type(1) > div:nth-of-type(1)',
+			 'Tutor Compare header displays');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div',
+			 '1 Credit card is displayed');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(3) > a', 
+			 '1 Credit Buy button is displayed');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div', 
+			 '8 Credit card is displayed');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(3) > a', 
+			 '8 Credit Buy button is displayed');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div:nth-of-type(2) > div', 
+			 '20 Credit card is displayed');
+			test.assertExists('#main-content > div > div:nth-of-type(2) > div > div:nth-of-type(3) > div > div:nth-of-type(3) > a',
+			 '20 Credit Buy button is displayed');
 		});
 	});
 
