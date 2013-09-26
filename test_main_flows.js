@@ -12,17 +12,21 @@
  *
  * Note: 
  * Must be run with --ignore-ssl-errors=true 
- * i.e. 'casperjs --ignore-ssl-errors=true test test_main_flows.js'
+ * i.e. 'casperjs --ignore-ssl-errors=true test test_main_flows.js --foo= *branch_name*'
+ *
+ * casperjs --ignore-ssl-errors=true test test_main_flows.js --foo=master
  *
  * @author J.Stone
  */
 
+ var foo = casper.cli.get("foo"); 
+
 // links 
-var login_page = 'http://master.pub.voxy.com/u/login/';
-var homepage = 'http://master.pub.voxy.com/';
-var logout = 'http://master.pub.voxy.com/u/logout/';
-var compare = 'http://master.pub.voxy.com/guide/compare/';
-var tutor_compare = 'http://master.pub.voxy.com/guide/tutor/credits/';
+var login_page = 'http://' + foo + '.pub.voxy.com/u/login/';
+var homepage = 'http://' + foo + '.pub.voxy.com/';
+var logout = 'http://' + foo + '.pub.voxy.com/u/logout/';
+var compare = 'http://' + foo + '.pub.voxy.com/guide/compare/';
+var tutor_compare = 'http://' + foo + '.pub.voxy.com/guide/tutor/credits/';
 
 
 // casper instance

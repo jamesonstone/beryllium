@@ -3,12 +3,17 @@
  *
  * Tests various elements on each of the major sections
  *
+ * casperjs --ignore-ssl-errors=true test test_stage0.js --foo=
  *
  * @author J.Stone
  */
-var login_page = 'http://master.pub.voxy.com/u/login/';
-var homepage = 'http://master.pub.voxy.com/';
-var logout = 'http://master.pub.voxy.com/u/logout/';
+
+// var login_page = 'http://master.pub.voxy.com/u/login/';
+// var logout = 'http://master.pub.voxy.com/u/logout/';
+
+var foo = casper.cli.get("foo"); 
+
+//foo == '' ? foo = 'master' : foo = casper.cli.get("foo");
 
 var x = require('casper').selectXPath;
 var casper = require('casper').create({
@@ -16,7 +21,11 @@ var casper = require('casper').create({
 	 // logLevel: 'debug'
 });
 
-casper.test.begin("Check the Guide displays", 6, function(test) {
+
+var login_page = 'http://' + foo + '.pub.voxy.com/u/login/';
+var logout = 'http://' + foo + '.pub.voxy.com/u/logout/';
+
+casper.test.begin("Check the Guide displays", 0, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1@voxy.com',
@@ -25,28 +34,14 @@ casper.test.begin("Check the Guide displays", 6, function(test) {
 	});
 
 	casper.then(function() {
-		//wait for guide to load
-		this.wait(1000, function() {
-			var check_url = this.getCurrentUrl();
-			this.echo('current url: ' + check_url);
-
-			//check for the substring "guide/recommend/" in the url
-			if(check_url.indexOf("guide/recommend/") === -1) {
-				casper.test.fail('url does not contain guide/recommend/');
-			} else {
-				casper.test.pass('Guide is displayed');
-			}
-		});
-	});
-
-	casper.then(function() {
-		test.assertExists('#lesson-preview > div:nth-of-type(2) > div > a > a', 'Start button displays');
+		this.wait(1000);
+		this.echo('url: ' + this.getCurrentUrl());
 	});
 
 	casper.thenOpen(logout, function() {
 		//dump the current session and logout
-		this.echo('current url: ' + this.getCurrentUrl());
 		this.wait(500);
+		this.echo('url: ' + this.getCurrentUrl());		
 	});
 
 	casper.run(function() {
