@@ -6,6 +6,7 @@
  * >> Registration // FUE Compare
  * >> Activity Workspace
  * >> Compare page
+ * >> Payment page
  * >> Tutoring Compare
  *
  * Note: 

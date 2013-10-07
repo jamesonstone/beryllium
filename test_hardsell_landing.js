@@ -15,7 +15,7 @@
  var foo = casper.cli.get("foo"); 
 
 // links 
-var landing_page = 'http://' + foo + '.pub.voxy.com/landing/web/en/nb1/1/';
+var landing_page = 'http://' + foo + '.pub.voxy.com/landing/web/nb1/1/';
 
 
 
@@ -62,9 +62,9 @@ casper.test.begin("Check hardsell landing page displays", 15, function(test) {
 		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(6) > div > div > div:nth-of-type(1) > div:nth-of-type(2) > img', 
 			'Forbes icon displays');
 		//Google play and App Store buttons are currently NOT selectable
-		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(7) > div > div:nth-of-type(2) > img', 
+		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(7) > div > div:nth-of-type(2) > div:nth-of-type(4) > a:nth-of-type(1)', 
 			'Google Play store icon displays');
-		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(7) > div > div:nth-of-type(2) > img', 
+		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(7) > div > div:nth-of-type(2) > div:nth-of-type(4) > a:nth-of-type(2)', 
 			'Appstore icon displays');
 		//
 		test.assertExists('#main > div:nth-of-type(2) > div:nth-of-type(8) > div > div:nth-of-type(2) > img', 
