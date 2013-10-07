@@ -29,7 +29,6 @@ casper.test.begin("Check hardsell landing page displays", 15, function(test) {
 	//move to setup
 	casper.start(landing_page, function() {
 		this.wait(1000);
-		this.echo('url: ' + this.getCurrentUrl());
 	});
 
 	casper.then(function() {
