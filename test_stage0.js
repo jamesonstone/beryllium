@@ -7,7 +7,7 @@
  *
  * @author J.Stone
  */
-//casperjs --ignore-ssl-errors=true test test_main_flows.js --foo=master
+// casperjs --ignore-ssl-errors=true test test_main_flows.js --foo=master
 // var login_page = 'http://master.pub.voxy.com/u/login/';
 // var logout = 'http://master.pub.voxy.com/u/logout/';
 
@@ -77,12 +77,27 @@ casper.test.begin("Verify ability to register new user", 7, function(test) {
 	casper.then(function() {
 		this.wait(1000);
 		this.echo('current url: ' + this.getCurrentUrl());
-
-		//add verifications for 3rd step of FUE
-
+		test.assertExists('#main > div > div:nth-of-type(1) > div > div > div:nth-of-type(1)', 'Your Interests title displays');
+		test.assertExists('#topics > ul > li:nth-of-type(1) > label > div:nth-of-type(1)', 'Sports interest displays');
+		test.assertExists('#topics > ul > li:nth-of-type(2) > label > div:nth-of-type(1)', 'Celebrities & Entertainment interest displays');
+		test.assertExists('#topics > ul > li:nth-of-type(3) > label > div:nth-of-type(1)', 'Business interest displays');
+		test.assertExists('#topics > ul > li:nth-of-type(4) > label > div:nth-of-type(1)', 'Technology interest displays');
+		test.assertExists('#topics > ul > li:nth-of-type(5) > label > div:nth-of-type(1)', 'Health interest displays');
+		test.assertExists('#topics > ul > li:nth-of-type(6) > label > div:nth-of-type(1)', 'Politics interest displays');
 	});
 
+	casper.then(function() {
+		this.click('#topics > ul > li:nth-of-type(1) > label > div:nth-of-type(1)');
+		this.wait(1000);
+		this.click('#main > div > div:nth-of-type(3) > div > div > div > div > button');
+	});
 
+	casper.then(function() {
+		this.wait(1000);
+		this.echo('current url: ' + this.getCurrentUrl());
+
+		//step 4 of onboarding
+	});
 
 
 

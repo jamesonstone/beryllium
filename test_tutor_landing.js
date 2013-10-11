@@ -25,7 +25,7 @@ var casper = require('casper').create({
 	 // logLevel: 'debug'
 });
 
-casper.test.begin("Check hardsell landing page displays", 11, function(test) {
+casper.test.begin("Check Tutor Focused landing page displays", 11, function(test) {
 	//move to setup
 	casper.start(landing_page, function() {
 		this.wait(1000);
