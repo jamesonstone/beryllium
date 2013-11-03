@@ -11,7 +11,7 @@
 // var login_page = 'http://master.pub.voxy.com/u/login/';
 // var logout = 'http://master.pub.voxy.com/u/logout/';
 
-var foo = casper.cli.get("foo"); 
+var foo = 'master'; //casper.cli.get("foo"); 
 
 //foo == '' ? foo = 'master' : foo = casper.cli.get("foo");
 
