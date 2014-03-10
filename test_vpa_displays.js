@@ -49,8 +49,19 @@ casper.test.begin("Check that the vpa displays", 7, function(test) {
 	});
 
 	casper.thenOpen(vpa, function() {
-		this.echo('current url: ' + this.getCurrentUrl());
+		test.assertExists('#content > div:nth-of-type(8) > div:nth-of-type(3) > div:nth-of-type(1) > div > span:nth-of-type(1)', 
+			'Voxy Proficiency title displays in pop up');
+		this.click('#content > div:nth-of-type(8) > div:nth-of-type(3) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > button');
+		this.wait(1000);
+	});
 
+	casper.then(function() {
+		test.assertExists('#content > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2)', 
+			'Activity instructions are displayed');
+		test.assertExists('#content > div:nth-of-type(3) > div > div:nth-of-type(1) > div:nth-of-type(2) > ol > li:nth-of-type(1) > p', 
+			'Left side content displays');
+		test.assertExists('#content > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div:nth-of-type(2)', 
+			'Answer options are displayed');
 	});
 
 	casper.run(function() {
