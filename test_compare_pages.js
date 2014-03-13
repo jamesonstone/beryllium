@@ -29,21 +29,16 @@ var payment_pages = [
 	"https://voxy.com/payment/voxytutor_8_25/"
 ];
 
-function addLinks(link) {
-	this.then
-}
-
-
 
 //casperjs setup
 var x = require('casper').selectXPath;
 var casper = require('casper').create({
 	 //verbose: true, 
-	 //logLevel: 'debug'
+	 //ogLevel: 'debug'
 });
 
 
-casper.test.begin("Check for 500 Errors on ALL payment pages", 1, function(test) {
+casper.test.begin("Check for 500 Errors on ALL payment pages", payment_pages.length, function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1@voxy.com',
@@ -60,13 +55,14 @@ casper.test.begin("Check for 500 Errors on ALL payment pages", 1, function(test)
 
 	//casper.thenOpen(payment1, function() {
 	casper.then(function() {
-		this.wait(1000);
 		//navigate to the right payment url
 		for (var i = 0; i < payment_pages.length; i++) {
-			console.log(payment_pages[i]);
-			this.open(payment_pages[i]);
-			this.echo(this.getCurrentUrl());
-			this.test.assertTextDoesntExist('Error: 500', 'Page ok');
+			this.thenOpen(payment_pages[i], function() {
+				this.test.assertTextDoesntExist('Error: 500', 'Page ok');
+				//look to adding response-level catching here
+				//http://stackoverflow.com/questions/17914489/how-to-get-casper-js-http-status-code
+				this.echo(this.getCurrentUrl());
+			});
 		}
 		//image capture here
 	});
@@ -74,13 +70,12 @@ casper.test.begin("Check for 500 Errors on ALL payment pages", 1, function(test)
 	casper.thenOpen(logout, function() {
 		//dump the current session and logout
 		//TODO: add this to teardown
-		this.echo('current url: ' + this.getCurrentUrl());
-		this.wait(500);
+		this.echo(this.getCurrentUrl());
 	});
 
 	casper.run(function() {
 		test.done();
-		this.exit()
+		this.exit();
 	});
 
 });
