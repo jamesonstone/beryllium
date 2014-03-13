@@ -58,19 +58,18 @@ casper.test.begin("Check for 500 Errors on ALL payment pages", 1, function(test)
 		});
 	});
 
-	casper.thenOpen(payment1, function() {
+	//casper.thenOpen(payment1, function() {
+	casper.then(function() {
+		this.wait(1000);
 		//navigate to the right payment url
-		this.echo(this.getCurrentUrl());
-		this.test.assertTextDoesntExist('Error: 500', 'Page ok');
-		/**
-		this.capture('google.png', {
-        	top: 100,
-        	left: 100,
-        	width: 500,
-        	height: 400
-    	});
-		*/
-	})
+		for (var i = 0; i < payment_pages.length; i++) {
+			console.log(payment_pages[i]);
+			this.open(payment_pages[i]);
+			this.echo(this.getCurrentUrl());
+			this.test.assertTextDoesntExist('Error: 500', 'Page ok');
+		}
+		//image capture here
+	});
 
 	casper.thenOpen(logout, function() {
 		//dump the current session and logout
