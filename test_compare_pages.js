@@ -31,6 +31,9 @@ var payment_pages = [
 
 
 //casperjs setup
+var utils = require('utils');
+var http = require('http');
+var fs = require('fs');
 var x = require('casper').selectXPath;
 var casper = require('casper').create({
 	 //verbose: true, 
@@ -38,7 +41,7 @@ var casper = require('casper').create({
 });
 
 
-casper.test.begin("Check for 500 Errors on ALL payment pages", payment_pages.length, function(test) {
+casper.test.begin("Check for 400 or greater response on ALL payment pages", (payment_pages.length * 2), function(test) {
 	casper.start(login_page, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1@voxy.com',
@@ -53,15 +56,20 @@ casper.test.begin("Check for 500 Errors on ALL payment pages", payment_pages.len
 		});
 	});
 
-	//casper.thenOpen(payment1, function() {
-	casper.then(function() {
+	casper.then(function(response) {
 		//navigate to the right payment url
 		for (var i = 0; i < payment_pages.length; i++) {
 			this.thenOpen(payment_pages[i], function() {
+				this.echo(this.getCurrentUrl());				
 				this.test.assertTextDoesntExist('Error: 500', 'Page ok');
+				this.test.assertHttpStatus(200);
+				if(response == undefined || response.status >= 400) {
+					this.test.fail("Page Failed to Load: " + this.echo(this.getCurrentUrl()));
+				};				
+				//debug dump:
+				//utils.dump(response.status);
 				//look to adding response-level catching here
 				//http://stackoverflow.com/questions/17914489/how-to-get-casper-js-http-status-code
-				this.echo(this.getCurrentUrl());
 			});
 		}
 		//image capture here
