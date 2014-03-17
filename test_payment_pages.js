@@ -58,12 +58,12 @@ casper.test.begin("Check for 400 or greater response on ALL payment pages", (pay
 		//navigate to the right payment url
 		for (var i = 0; i < payment_pages.length; i++) {
 			this.thenOpen(payment_pages[i], function() {
-				this.echo(this.getCurrentUrl());				
-				this.test.assertTextDoesntExist('Error: 500', 'Page ok');
+				this.echo(this.getCurrentUrl());							
 				this.test.assertHttpStatus(200);
 				if(response == undefined || response.status >= 400) {
 					this.test.fail("Page Failed to Load: " + this.echo(this.getCurrentUrl()));
 				};				
+				//this.test.assertTextDoesntExist('Error: 500', 'Page ok');				
 				//debug dump:
 				//utils.dump(response.status);
 				//look to adding response-level catching here
