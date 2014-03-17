@@ -52,7 +52,7 @@ casper.test.begin("Check for 400 or greater response on ALL payment pages", (pay
 	casper.then(function() {
 		//added wait here because transition to guide wasn't occuring fast enough
 		this.wait(1000, function() {
-			this.echo(this.getCurrentUrl());
+			this.echo("Guide load success: " + this.getCurrentUrl());
 		});
 	});
 
@@ -78,7 +78,7 @@ casper.test.begin("Check for 400 or greater response on ALL payment pages", (pay
 	casper.thenOpen(logout, function() {
 		//dump the current session and logout
 		//TODO: add this to teardown
-		this.echo(this.getCurrentUrl());
+		this.echo("Logout and clear data successful: " + this.getCurrentUrl());
 	});
 
 	casper.run(function() {
