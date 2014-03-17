@@ -1,15 +1,13 @@
 /**
  * tools: casperjs/phantomjs
  *
- * This test navigates to various compare pages
+ * This test navigates to various payment pages
  * and tests that they display correctly
  *
  * @author J.Stone
  */
 var login_page = 'http://voxy.com/u/login/';
-var payment1 = 'https://voxy.com/payment/VoxyPremium_12_168USD_24_notrial/?templateId=inapp-valentines-premium'
 var logout = 'http://voxy.com/u/logout/';
-
 var payment_pages = [
 	"https://voxy.com/payment/voxytrial_7_12_120USD_24/?templateId=personalize-3box",
 	"https://voxy.com/payment/voxytrial_7_12_0_12/?templateId=personalize-3box",
