@@ -21,11 +21,11 @@
  var foo = casper.cli.get("foo"); 
 
 // links 
-var login_page = 'http://' + foo + '.pub.voxy.com/u/login/';
-var homepage = 'http://' + foo + '.pub.voxy.com/';
-var logout = 'http://' + foo + '.pub.voxy.com/u/logout/';
-var compare = 'http://' + foo + '.pub.voxy.com/guide/compare/';
-var tutor_compare = 'http://' + foo + '.pub.voxy.com/guide/tutor/credits/';
+var login_page = 'http://voxy.com/u/login/';
+var homepage = 'http://voxy.com/';
+var logout = 'http://voxy.com/u/logout/';
+var compare = 'http://voxy.com/guide/compare/';
+var tutor_compare = 'http://voxy.com/guide/tutor/credits/';
 
 
 // casper instance
