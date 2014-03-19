@@ -6,15 +6,16 @@
  *
  * @author J.Stone
  */
-var login_page = 'http://voxy.com/u/login/';
-var homepage = 'http://voxy.com/';
-var logout = 'http://voxy.com/u/logout/';
+
+var login_page = 'http://master.pub.voxy.com/u/login/';
+var homepage = 'http://master.pub.voxy.com/';
+var logout = 'http://master.pub.voxy.com/u/logout/';
 
 var x = require('casper').selectXPath;
-var casper = require('casper').create({
-	 //verbose: true, 
-	 //logLevel: 'debug'
-});
+// var casper = require('casper').create({
+// 	 //verbose: true, 
+// 	 //logLevel: 'debug'
+// });
 
 
 casper.test.begin("Test a valid login at /u/login/", 1, function(test) {
@@ -167,7 +168,7 @@ casper.test.begin("Test a invalid login at voxy.com (header)", 1, function(test)
 	casper.run(function() {
 		test.done();
 		//exit the tests
-		this.exit();
+		//this.exit();
 	});
 
 });
