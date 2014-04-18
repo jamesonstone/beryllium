@@ -4,6 +4,9 @@
  * This test navigates to various payment pages
  * and tests that they display correctly
  *
+ * Run command:
+ * casperjs --ignore-ssl-errors=true test test_payment_pages.js
+ *
  * @author J.Stone
  */
 var login_page = 'http://master.pub.voxy.com/u/login/';
