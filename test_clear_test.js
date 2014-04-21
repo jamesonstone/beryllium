@@ -30,11 +30,4 @@ casper.test.begin("Clear session for next tests", 0, function(test) {
 	});
 });
 
-//run all then exit the suite
-casper.run(function() {
-	test.done();
-	this.exit();
-});
-
-
 
