@@ -9,13 +9,12 @@
  *
  * @author J.Stone
  */
-var login = 'http://master.pub.voxy.com/u/login/';
-var logout = 'http://master.pub.voxy.com/u/logout/';
-var quiz = "http://master.pub.voxy.com/activities/lesson/by-resource/5314eeb772dd6848880c7459/quiz/";
-
+var login = 'https://master.pub.voxy.com/u/login/';
+var logout = 'https://master.pub.voxy.com/u/logout/';
+var quiz = "https://master.pub.voxy.com/activities/lesson/by-resource/5314eeb772dd6848880c7459/quiz/";
 
 //casperjs setup
-//var x = require('casper').selectXPath;
+var x = require('casper').selectXPath;
 var casper = require('casper').create({
  	 //verbose: true, 
  	 //logLevel: 'debug'
@@ -34,20 +33,35 @@ casper.test.begin('Initialize the tests by logging into the Guide', 1, function(
 		this.wait(1000, function() {
 			//check for the substring "guide/recommend/" in the url
 			this.test.assert((this.getCurrentUrl().indexOf("guide/recommend/") != -1), "guide is displayed");
-			this.echo(this.getCurrentUrl());
 		});
 	});
 
 	casper.run(function() {
 		test.done();
-		//this.exit();
 	});
 });
 
-casper.test.begin("Test text article quiz activity", 0, function(test) {
+//test quiz activity
+casper.test.begin("Test text article quiz activity", 5, function(test) {
 	casper.start(quiz, function() {
-		this.wait(1000);
-		this.echo(this.getCurrentUrl());		
+		//this.echo(this.getCurrentUrl());		
+	});
+
+	//check the pre-activity page
+	casper.then(function() {
+		test.assertUrlMatch(quiz, 'quiz url is displayed');
+		test.assertSelectorHasText(x('//*[@id="content"]/div[3]/div/div[1]/div[1]/div[1]/div/div[2]/div/h5'), "\"The Starry Night\" by Van Gogh");
+		test.assertExists(x('//*[@id="resource-jplayer-container-0"]'), 'player displays');		
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[1]/div[1]/div[1]/div/div[1]/img'), 'article image displays');
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/button'), 'ok button displays');
+		//click the ok, I'm ready button
+		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/button'));
+	});
+
+	//check the functionality of the activity
+	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'), function() {
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'));
+		this.click(x('#content > div.activity > div > div.activity-module-container.span5 > div > div.activity-info-region > div > div.activity-tips.displayed.present > button'));
 	});
 
 	casper.run(function() {
@@ -57,14 +71,13 @@ casper.test.begin("Test text article quiz activity", 0, function(test) {
 
 
 //neccessary to clear the casper instance being passed around
-casper.test.begin("Clear session for next tests", 0, function(test) {
+casper.test.begin("Clear session for next tests", 1, function(test) {
     casper.start(logout, function() {
-    	this.wait(1000);
-    	this.echo(this.getCurrentUrl());
-    });
+    	test.assertUrlMatch(logout, 'logout url is displayed');
+    });		
 
 	casper.run(function() {
-		this.test.done();
+		test.done();
 		this.exit();
 	});
 });
