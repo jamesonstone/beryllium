@@ -21,7 +21,7 @@ var casper = require('casper').create({
 });
 
 //initialize the casper object and login to the website
-casper.test.begin('Initialize the tests by logging into the Guide', 1, function(test) {
+casper.test.begin('setup', 1, function(test) {
 	casper.start(login, function() {
 		this.fill('form#ajax-login-form', {
 		'username':    'newu1@voxy.com',
@@ -42,7 +42,7 @@ casper.test.begin('Initialize the tests by logging into the Guide', 1, function(
 });
 
 //test quiz activity
-casper.test.begin("Test text article quiz activity", 5, function(test) {
+casper.test.begin("Test text article quiz activity", 6, function(test) {
 	casper.start(quiz, function() {
 		//this.echo(this.getCurrentUrl());		
 	});
@@ -60,8 +60,8 @@ casper.test.begin("Test text article quiz activity", 5, function(test) {
 
 	//check the functionality of the activity
 	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'), function() {
-		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'));
-		this.click(x('#content > div.activity > div > div.activity-module-container.span5 > div > div.activity-info-region > div > div.activity-tips.displayed.present > button'));
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'), );
+		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'));
 	});
 
 	casper.run(function() {
@@ -71,7 +71,7 @@ casper.test.begin("Test text article quiz activity", 5, function(test) {
 
 
 //neccessary to clear the casper instance being passed around
-casper.test.begin("Clear session for next tests", 1, function(test) {
+casper.test.begin("teardown", 1, function(test) {
     casper.start(logout, function() {
     	test.assertUrlMatch(logout, 'logout url is displayed');
     });		
