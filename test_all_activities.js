@@ -42,10 +42,8 @@ casper.test.begin('setup', 1, function(test) {
 });
 
 //test quiz activity
-casper.test.begin("Test text article quiz activity", 6, function(test) {
-	casper.start(quiz, function() {
-		//this.echo(this.getCurrentUrl());		
-	});
+casper.test.begin("Test text article QUIZ activity", 6, function(test) {
+	casper.start(quiz);
 
 	//check the pre-activity page
 	casper.then(function() {
@@ -58,10 +56,15 @@ casper.test.begin("Test text article quiz activity", 6, function(test) {
 		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/button'));
 	});
 
-	//check the functionality of the activity
+	//check the instructional screen before starting the activity
 	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'), function() {
-		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'), );
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'));
 		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'));
+	});
+
+	//check first question in activity
+	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[2]/b[1]'), function() {
+		//check for all the answer choices showing
 	});
 
 	casper.run(function() {
