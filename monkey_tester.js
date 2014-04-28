@@ -16,30 +16,34 @@ var pages = [
 	"https://voxy.com/",
 ];
 
-
-//casperjs setup
-var utils = require('utils');
-var http = require('http');
-var x = require('casper').selectXPath;
-var casper = require('casper').create({
- 	 verbose: true, 
- 	 logLevel: 'debug'
-});
-
-
 //grab the page links
 function getLinks() {
-	var links = document.querySelectorAll('h3.r a');
+	var links = document.querySelectorAll('a');
 	return Array.prototype.map.call(links, function(a) {
 		return a.getAttribute('href');
 	});
 } 
 
 
+//casperjs setup
+var utils = require('utils');
+var http = require('http');
+var x = require('casper').selectXPath;
+var casper = require('casper').create({
+ 	 // verbose: true, 
+ 	 // logLevel: 'debug'
+});
+
+
+
+
 casper.test.begin('check marketing site', 0, function(test) {
 	casper.start('https://voxy.com/landing/web/nb1/1/', function() {
-		this.echo(this.getCurrentUrl);
 		links = this.evaluate(getLinks);
+		// for link in links:
+		// 	if(link == '/') {
+		// 		link.remove();
+		// 	}
 	});
 
 	casper.run(function() {
