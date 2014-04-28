@@ -30,11 +30,26 @@ casper.test.begin("Clear session for next tests", 0, function(test) {
 	});
 });
 
-//run all then exit the suite
-casper.run(function() {
-	test.done();
-	this.exit();
-});
+/**
+*	This checks for 200 responses on critical pages
+*
+	casper.then(function(response) {
+		//navigate to the right payment url
+		for (var i = 0; i < payment_pages.length; i++) {
+			this.thenOpen(payment_pages[i], function() {
+				this.echo(this.getCurrentUrl());							
+				this.test.assertHttpStatus(200);
+				if(response == undefined || response.status >= 400) {
+					this.test.fail("Page Failed to Load: " + this.echo(this.getCurrentUrl()));
+				};				
+				//this.test.assertTextDoesntExist('Error: 500', 'Page ok');				
+				//debug dump:
+				//utils.dump(response.status);
+				//look to adding response-level catching here
+				//http://stackoverflow.com/questions/17914489/how-to-get-casper-js-http-status-code
+			});
+		}
+	});
 
-
+**/
 
