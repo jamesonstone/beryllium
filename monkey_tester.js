@@ -13,7 +13,7 @@
 var login = 'https://voxy.com/u/login/';
 var logout = 'https://voxy.com/u/logout/';
 var pages = [
-	"https://voxy.com/",
+	"https://voxy.com/"
 ];
 
 //grab the page links
@@ -35,22 +35,45 @@ var casper = require('casper').create({
 });
 
 
+var show_links = new Array();
+var i;
 
-
-casper.test.begin('check marketing site', 0, function(test) {
-	casper.start('https://voxy.com/landing/web/nb1/1/', function() {
+casper.test.begin('check: ' + pages[0], 0, function(test) {
+	casper.start(pages[0], function() {
 		links = this.evaluate(getLinks);
-		// for link in links:
-		// 	if(link == '/') {
-		// 		link.remove();
-		// 	}
+		for(i = links.length; i--;) {
+			if(links[i] != '/' && links[i] != '' &&
+			 links[i] != ' ' && links[i] != '#' && links[i].indexOf('i18n/setlang/') == -1 &&
+			 links[i] != 'javascript:void(0);' && links[i] != 'mailto:support@voxy.com') {
+			 	if(links[i].charAt(0) == 'h') {
+					show_links.push(links[i]);
+			 	} else {
+			 		show_links.push('https://voxy.com' + links[i]);
+			 		
+			 	}	
+			}
+		};
+		show_links.sort();
 	});
 
+	//check each link for < 400 response
+	casper.then(function(response) {
+		for (var d = 0; d < show_links.length; d++) {
+			this.thenOpen(show_links[d], function() {
+				this.echo(this.getCurrentUrl());							
+				this.test.assertHttpStatus(200);
+				if(response == undefined || response.status >= 400) {
+					this.test.fail("Page Failed to Load: " + this.echo(this.getCurrentUrl()));
+				};				
+			});
+		}
+	});	
+
 	casper.run(function() {
-		this.echo(links.length + ' links found: ');
-		this.echo(' - ' + links.join('\n - '));
+		this.echo(show_links.length + ' links found');
+		//this.echo(' - ' + show_links.join('\n - '));
 		this.exit();
-	})
+	});
 });
 
 
