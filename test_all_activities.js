@@ -13,6 +13,7 @@ var login = 'https://master.pub.voxy.com/u/login/';
 var logout = 'https://master.pub.voxy.com/u/logout/';
 var quiz = 'https://master.pub.voxy.com/activities/lesson/by-resource/5314eeb772dd6848880c7459/quiz/';
 var wordscramble = 'https://master.pub.voxy.com/activities/lesson/by-resource/5314eeb772dd6848880c7459/wordscramble/';
+var wordmatch = 'https://master.pub.voxy.com/activities/lesson/by-resource/5314eeb772dd6848880c7459/wordmatch/';
 
 //casperjs setup
 var x = require('casper').selectXPath;
@@ -122,12 +123,24 @@ casper.test.begin("Test text article WORDSCRAMBLE activity", 0, function(test) {
 		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'));
 	});
 
-	//check the activity
+	// //check the activity
 	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[1]/div/a'), function() {
 		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[1]/div/a'), 'player is displayed');
-		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[1]/div'). 'activity div is displayed');
-	})
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[1]/div'), 'activity div is displayed');
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[1]/div/div[1]/b[1]'), 'painting');
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[2]/div/div[1]/b[2]'), 'sky');
+		// this.wait(3000);
+		// test.assertSelectorHasText(x('//*[@id="footer"]/div/div/div[2]/div/span[1]'), '2 or 2')
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[3]/div/div[1]/b[1]'), 'night');
+		// this.wait(3000);
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[4]/div/div[1]/b[1]'), 'famous');
+	});
 
+	casper.wait(3000, function() {
+		//test.assertExists(x('//*[@id="footer"]/div/div/div[2]/button'), 'next button is displayed');
+		//test.assert(true, this.visible(x('//*[@id="footer"]/div/div/div[2]/button')));
+		//test.assertSelectorHasText(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[3]/div'), '100%');	
+	});
 
 	casper.run(function() {
 		test.done();
@@ -135,6 +148,49 @@ casper.test.begin("Test text article WORDSCRAMBLE activity", 0, function(test) {
 });
 
 
+/**
+******************************
+* Test WORDMATCH activity *
+******************************
+**/
+casper.test.begin("Test text article WORDMATCH activity", 0, function(test) {
+	casper.start(wordmatch);
+
+	//check the pre-activity page
+	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/button'), function() {
+
+	});
+
+	//check the instructional screen
+	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'), function() {
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]'), 'Writing Activity title is displayed');
+		test.assertSelectorHasText(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div'), 'Prepare-se!');
+		this.click(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[2]/button'));
+	});
+
+	// //check the activity
+	casper.waitForSelector(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[1]/div/a'), function() {
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[1]/div/a'), 'player is displayed');
+		test.assertExists(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[1]/div'), 'activity div is displayed');
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[1]/div/div[1]/b[1]'), 'painting');
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[2]/div/div[1]/b[2]'), 'sky');
+		// this.wait(3000);
+		// test.assertSelectorHasText(x('//*[@id="footer"]/div/div/div[2]/div/span[1]'), '2 or 2')
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[3]/div/div[1]/b[1]'), 'night');
+		// this.wait(3000);
+		// this.sendKeys(x('//*[@id="content"]/div[3]/div/div[2]/div/div[2]/div[2]/div[4]/div/div[1]/b[1]'), 'famous');
+	});
+
+	casper.wait(3000, function() {
+		//test.assertExists(x('//*[@id="footer"]/div/div/div[2]/button'), 'next button is displayed');
+		//test.assert(true, this.visible(x('//*[@id="footer"]/div/div/div[2]/button')));
+		//test.assertSelectorHasText(x('//*[@id="content"]/div[3]/div/div[2]/div/div[1]/div/div[1]/div/div[1]/div[3]/div'), '100%');	
+	});
+
+	casper.run(function() {
+		test.done();
+	});
+});
 
 //neccessary to clear the casper instance being passed around
 casper.test.begin("teardown", 1, function(test) {

@@ -13,7 +13,8 @@
 var login = 'https://voxy.com/u/login/';
 var logout = 'https://voxy.com/u/logout/';
 var pages = [
-	"https://voxy.com/"
+	'https://voxy.com/',
+	'https://voxy.com/about-us/'
 ];
 
 //grab the page links
@@ -48,8 +49,7 @@ casper.test.begin('check: ' + pages[0], 0, function(test) {
 			 	if(links[i].charAt(0) == 'h') {
 					show_links.push(links[i]);
 			 	} else {
-			 		show_links.push('https://voxy.com' + links[i]);
-			 		
+			 		show_links.push('https://voxy.com' + links[i]);			 		
 			 	}	
 			}
 		};
@@ -58,6 +58,7 @@ casper.test.begin('check: ' + pages[0], 0, function(test) {
 
 	//check each link for < 400 response
 	casper.then(function(response) {
+		this.echo(show_links.length + ' links found');		
 		for (var d = 0; d < show_links.length; d++) {
 			this.thenOpen(show_links[d], function() {
 				this.echo(this.getCurrentUrl());							
@@ -70,55 +71,9 @@ casper.test.begin('check: ' + pages[0], 0, function(test) {
 	});	
 
 	casper.run(function() {
-		this.echo(show_links.length + ' links found');
+		//this.echo(show_links.length + ' links found');
 		//this.echo(' - ' + show_links.join('\n - '));
 		this.exit();
 	});
 });
 
-
-
-
-
-
-
-
-// casper.test.begin("Check for 400 or greater response on pages", (payment_pages.length + 2), function(test) {
-// 	casper.start(login, function() {
-// 		this.fill('form#ajax-login-form', {
-// 		'username':    'newu1@voxy.com',
-// 		'password':    'things'
-// 		}, true);
-// 	});
-
-// 	casper.then(function() {
-// 		this.wait(1000, function() {
-// 			//check for the substring "guide/recommend/" in the url
-// 			this.test.assert((this.getCurrentUrl().indexOf("guide/recommend/") != -1), "guide is displayed");
-// 		});
-// 	});
-
-// 	casper.then(function(response) {
-// 		//navigate to the right payment url
-// 		for (var i = 0; i < payment_pages.length; i++) {
-// 			this.thenOpen(payment_pages[i], function() {
-// 				this.echo(this.getCurrentUrl());							
-// 				this.test.assertHttpStatus(200);
-// 				if(response == undefined || response.status >= 400) {
-// 					this.test.fail("Page Failed to Load: " + this.echo(this.getCurrentUrl()));
-// 				};				
-// 			});
-// 		}
-// 	});
-
-// 	casper.thenOpen(logout, function() {
-// 		//dump the current session and logout
-// 		test.assertUrlMatch(logout, 'logout url is displayed');
-// 	});
-
-	// casper.run(function() {
-	// 	//test.done();
-	// 	this.exit();
-	// });
-
-//});
